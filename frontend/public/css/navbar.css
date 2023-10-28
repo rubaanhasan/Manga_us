@@ -1,3 +1,26 @@
 .nav-item:hover{
     background-color: #110bc0f6;
 }
+.box{
+    width: 30vw;
+    height: 30px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-right: 10px;
+}
+.box > i {
+    font-size: 20px;
+    color: #777;
+}
+
+.box > input{
+    flex: 1;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    padding-left: 10px;
+}

@@ -24,11 +24,16 @@
       .navbar .nav-link {
         color: #fff !important;
       }
+      #Setbackground{
+        background-color: rgba(0, 0, 0, 0.8);
+        height: 120vh;
+        background-attachment:fixed ;
+      }
     </style>
 
 <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-dark text-white">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="/index.">Navbar</a>
+    <a class="navbar-brand text-white" href="/index">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -61,48 +66,47 @@
       </div>
       <a class="nav-link text-white nav-item" href="/login">Login</a>
       </form>
+
     </div>
   </div>
 </nav>
 
-      <div class="mask d-flex align-items-center" style="background: rgba(0, 0, 0, 0.8) fixed;height: 100vh;">
+      <div class="mask d-flex align-items-center" id="Setbackground">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-8">
               <form class="bg-white rounded shadow-5-strong p-5">
                 <!-- Email input -->
-                <h2 class="text-center">Login Up!</h2>
-                
+                <h2 class="text-center">Sign Up!</h2>
                 <div class="form-outline mb-4">
-                  <input type="email" id="form2Example1" class="form-control" name="form2Example1"/>
-                  <label class="form-label" for="form2Example1">Email address</label>
-                </div>                
-                
+                  <input type="text" id="form1Example1" class="form-control" name="form1Example1" />
+                  <label class="form-label" for="form1Example1">Organization Name</label>
+                </div>  
                 <div class="form-outline mb-4">
-                  <input type="password" id="form2Example2" class="form-control" name="form2Example2"/>
-                  <label class="form-label" for="form2Example2">Password</label>
+                  <input type="text" id="form1Example2" class="form-control" name="form1Example2"/>
+                  <label class="form-label" for="form1Example2">Organization Address</label>
+                </div>  
+                <div class="form-outline mb-4">
+                  <input type="text" id="form1Example3" class="form-control" name="form1Example3"/>
+                  <label class="form-label" for="form1Example3">Username</label>
                 </div>
-
-                <!-- 2 column grid layout for inline styling -->
-                <div class="row mb-4">
-                  <div class="col d-flex justify-content-center">
-                    <!-- Checkbox -->
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-                      <label class="form-check-label" for="form1Example3">
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="col text-center">
-                    <a  href="/signup">No Account? Create New!</a>
-                  </div>
+                <div class="form-outline mb-4">
+                  <input type="password" id="form1Example4" class="form-control" name="form1Example4"/>
+                  <label class="form-label" for="form1Example4">Password</label>
+                </div>
+                <h4>Contact Person Details :</h4>
+                <div class="form-outline mb-4">
+                  <input type="text" id="form1Example5" class="form-control" name="form1Example5"/>
+                  <label class="form-label" for="form1Example5">Name</label>
+                </div>
+                <div class="form-outline mb-4">
+                  <input type="text" id="form1Example6" class="form-control" name="form1Example6"/>
+                  <label class="form-label" for="form1Example6">Phone Number</label>
                 </div>
 
                 <!-- Submit button -->
                 <div class=text-center>
-                 <button type="submit" name="SubmitForm2" class="btn btn-primary btn-block justify-content-center">Sign in</button>
+                 <button type="submit" name="SubmitForm1" class="btn btn-primary btn-block justify-content-center">Sign in</button>
                  </div>
               </form>
             </div>
