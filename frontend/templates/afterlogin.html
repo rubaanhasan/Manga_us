@@ -66,18 +66,18 @@
       margin: 10px;
     }
     .avatar::before,
-  .avatar::after {
-    --scale: 0;
-    --arrow-size: 20px;
-    --tooltip-color: green;
+.avatar::after {
+  --scale: 0;
+  --arrow-size: 20px;
+  --tooltip-color: green;
 
-    position: absolute;
-    top: -.25rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
-    transition: 150ms transform;
-    transform-origin: bottom center;
-  }
+  position: absolute;
+  top: -.25rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+  transition: 150ms transform;
+  transform-origin: bottom center;
+}
 
 .avatar::before {
   --translate-y: calc(-100% - var(--arrow-size));
@@ -142,7 +142,7 @@
               <div class="box">
                 <input type="text" style="font-size:24px">Search <i class="fa fa-search"></i></button>
             </div>
-            <a class="nav-link text-white nav-item" href="/login">Login</a>
+            <a class="nav-link text-white nav-item" href="/upload">Upload</a>
             </form>
 
           </div>
