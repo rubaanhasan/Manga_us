@@ -1,0 +1,2 @@
+https://colab.research.google.com/drive/1iyEQdR6Z5m0d_FlqXOn22gXsMQWb-I2A#scrollTo=zz-Q5L7wSbKl
+Has text detection & Rectangle detection
