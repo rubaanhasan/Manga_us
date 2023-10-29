@@ -2,98 +2,162 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
+const multer = require("multer"); // Add multer for file uploads
+const { GridFsStorage } = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
+const LogInCollection = require("./mongodb"); // Import you
 
- const hbs = require("hbs")
+//const hbs = require("hbs");
 
 const tempelatePath = path.join(__dirname, "../frontend/templates");
 const publicPath = path.join(__dirname, "../frontend/public/CSS");
 const faviconPath = path.join(__dirname, "../frontend");
 const imagesPath = path.join(__dirname, "../frontend");
 
-const LogInCollection = require("./mongodb");
 const port = process.env.PORT || 3000;
-app.use(express.json());
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 console.log(publicPath);
 
 app.set("view engine", "hbs");
-app.set("views", tempelatePath); //default name of template folder is views that why we changing it to template path
+app.set("views", tempelatePath);
 app.use(express.static(publicPath));
 app.use(express.static(imagesPath));
 app.use(express.static(faviconPath));
 
-// hbs.registerPartials(partialPath)
-app.get('/', (req, res) => {
-  res.render('index')
+let gfs;
+const conn = mongoose.connection;
+conn.once("open", () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
 });
-// app.get("/signup", (req, res) => {
-//   res.render("signup");
-// });
-app.get('/login', (req, res) => {
-  res.render('login');
+
+// Multer setup for file uploads
+// Create a GridFS storage engine
+const storage = new GridFsStorage({
+  url: "mongodb+srv://rubaanhasan:7568427735@cluster0.8eygicr.mongodb.net/?retryWrites=true&w=majority", // Replace with your MongoDB Atlas connection URI
+  options: { useNewUrlParser: true, useUnifiedTopology: true },
+  file: (req, file) => {
+    return {
+      filename: file.originalname,
+      bucketName: "uploads",
+    };
+  },
 });
-// app.get("/about", (req, res) => {
-//   res.render("about");
-// });
-// app.get("/contact", (req, res) => {
-//   res.render("contact");
-// });
 
-app.post('/login', async (req, res) => {
-  // const data = new LogInCollection({
-  //     name: req.body.name,
-  //     password: req.body.password
-  // })
-  // await data.save()
-  console.log(req.body);
-  const data = {
-    email: req.body.email,
-    password: req.body.password,
-    cpassword: req.body.cpassword,
-  };
+app.get("/", (req, res) => {
+  res.render("index");
+});
 
-  const checking = await LogInCollection.findOne({ email: req.body.email });
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+app.get("/signup", (req, res) => {
+  res.render("signup");
+});
+app.get("/upload", (req, res) => {
+  res.render("upload");
+});
 
-  console.log(checking);
-  
-  try {
-    if (checking) {
-      // Perform case-insensitive comparisons
-      if (
-        checking.email === req.body.email &&
-        checking.userame === req.body.userame &&
-        checking.password === req.body.password  
-      ) {
-        res.send("User details already exist");
-        return;
-      }
-    }
-    // If no matching user is found, insert the new user.
-    await LogInCollection.insertMany([data]);
-    //res.send("User registered successfully");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error occurred during registration");
+
+const upload = multer({ storage });
+
+app.use(express.json());
+
+// Define a route for file upload
+app.post("/upload", upload.single("file"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded." });
   }
 
-  res.status(201).render("home", {
+  // Save information about the uploaded file to MongoDB Atlas
+  const { originalname, filename, id } = req.file;
+  const fileInfo = {
+    form3Example1,
+    form3Example2,
+    form3Example3: id,
+    form3Example4: file.mimetype.startsWith("image") ? "image" : "file",
+    // Add more fields as needed for your application
+  };
+
+  try {
+    // Create a new document in the File collection
+    const fileDoc = new File(fileInfo);
+    await fileDoc.save();
+    res.redirect('/afterlogin')
+    res.status(200).json({ message: "File uploaded successfully.", fileInfo });
+  } catch (error) {
+    console.error("Error while saving file to MongoDB:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+
+
+
+
+
+
+app.post("/signup", async (req, res) => {
+  console.log(req.body);
+  const data = {
+
+    form1Example1: req.body.form1Example1,
+    form1Example2: req.body.form1Example2,
+    name: req.body.name,
+    password: req.body.password,
+    form1Example5: req.body.form1Example5,
+    form1Example6: req.body.form1Example6,
+  };
+  //es.redirect('/login')
+  // const check = await LogInCollection.findOne({ form1Example5: req.body.form1Example5 });
+  
+  // console.log(check);
+  
+  try {
+    // if (checking) {
+    //   // Perform case-insensitive comparisons
+    //   if (
+    //     checking.form1Example5 === req.body.form1Example5 &&
+    //     checking.name === req.body.name &&
+    //     checking.password === req.body.password  
+    //   ) {
+    //     res.send("User details already exist");
+    //     return;
+    //   }
+    // }
+    // If no matching user is found, insert the new user.
+    // await LogInCollection.insertMany([data]);
+    //const newUser = await LogInCollection.create(data);
+    // res.redirect('/login')
+    res.send("User registered successfully");
+  } catch (err) {
+    console.error(err);
+    // res.status(500).send("Error occurred during registration");
+    res.redirect('/login')
+  }
+
+  res.status(201).render("index", {
     naming: req.body.name,
   });
 });
+//   await LogInCollection.insertMany([data]);
+//   res.render("login");
+// });
 
-//to work with mongodb we have to work with async and await fnc
 app.post("/login", async (req, res) => {
   try {
-    const check = await LogInCollection.findOne({ name: req.body.name });
+    //const check = await LogInCollection.findOne({ name: req.body.name });
 
     if (check.password === req.body.password) {
-      res.status(201).render("home", { naming: `${req.body.name}` });
+      res.redirect('/afterlogin')
+      // res.status(201).render("afterlogin");
     } else {
-      res.send("incorrect password");
+      res.redirect('/afterlogin')
+      //es.send("incorrect password");
     }
-  } catch (e) {
+  } catch {
     res.send("wrong details");
   }
 });
